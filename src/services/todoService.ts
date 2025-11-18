@@ -70,10 +70,14 @@ export class TodoService {
         });
       }
 
+      console.log('TodoService.addTodo - Final todoData:', todoData);
+      console.log('TodoService.addTodo - reminderTimes:', todoData.reminderTimes);
+
       const docRef = await addDoc(
         collection(db, this.COLLECTION_NAME),
         todoData
       );
+      console.log('TodoService.addTodo - Document added with ID:', docRef.id);
       return docRef.id;
     } catch (error) {
       console.error('Error adding todo:', error);

@@ -9,9 +9,15 @@ interface EditTaskModalProps {
 }
 
 const EditTaskModal = ({ todo, onSave, onCancel }: EditTaskModalProps) => {
-  const [editedTodo, setEditedTodo] = useState<TodoItem>({ ...todo });
+  const [editedTodo, setEditedTodo] = useState<TodoItem>({ 
+    ...todo,
+    reminderTimes: todo.reminderTimes || []
+  });
   const [newReminderTime, setNewReminderTime] = useState("");
   const [newSubtask, setNewSubtask] = useState("");
+  
+  console.log('EditTaskModal - todo.reminderTimes:', todo.reminderTimes);
+  console.log('EditTaskModal - editedTodo.reminderTimes:', editedTodo.reminderTimes);
 
   const handleChange = (field: keyof TodoItem, value: any) => {
     setEditedTodo({ ...editedTodo, [field]: value });
