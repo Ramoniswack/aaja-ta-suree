@@ -18,7 +18,11 @@ export class NotificationService {
   // Initialize push notifications for mobile
   async initializePushNotifications(): Promise<string | null> {
     if (!Capacitor.isNativePlatform()) {
-      console.log('Not a native platform, skipping push notification setup');
+      console.log('Not a native platform, using browser notifications');
+      // Request browser notification permission
+      if ('Notification' in window && Notification.permission === 'default') {
+        await Notification.requestPermission();
+      }
       return null;
     }
 
@@ -31,7 +35,8 @@ export class NotificationService {
       }
 
       if (permStatus.receive !== 'granted') {
-        throw new Error('User denied permissions!');
+        console.warn('Push notification permission denied');
+        return null;
       }
 
       // Register with Apple / Google to receive push via APNS/FCM
@@ -53,6 +58,11 @@ export class NotificationService {
         'pushNotificationReceived',
         (notification) => {
           console.log('Push received: ' + JSON.stringify(notification));
+          // Show local notification
+          this.sendImmediateNotification(
+            notification.title || 'Notification',
+            notification.body || ''
+          );
         }
       );
 
@@ -73,11 +83,17 @@ export class NotificationService {
 
   // Initialize local notifications
   async initializeLocalNotifications(): Promise<void> {
+    if (!Capacitor.isNativePlatform()) {
+      console.log('Using browser notifications for web');
+      return;
+    }
+
     try {
       const permStatus = await LocalNotifications.checkPermissions();
       
       if (permStatus.display === 'prompt') {
-        await LocalNotifications.requestPermissions();
+        const result = await LocalNotifications.requestPermissions();
+        console.log('Local notification permission:', result.display);
       }
 
       // Listen for notification actions
@@ -135,6 +151,20 @@ export class NotificationService {
 
   // Send immediate notification
   async sendImmediateNotification(title: string, body: string): Promise<void> {
+    // For web, use browser notifications
+    if (!Capacitor.isNativePlatform()) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, {
+          body,
+          icon: '/ats.png',
+          badge: '/ats.png',
+          vibrate: [200, 100, 200],
+        });
+      }
+      return;
+    }
+
+    // For mobile, use local notifications
     const id = Math.floor(Math.random() * 100000);
     await this.scheduleNotification(title, body, id);
   }

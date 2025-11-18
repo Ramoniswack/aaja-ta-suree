@@ -43,30 +43,30 @@ const MyStats = () => {
   const completedHabits = habits.filter((h) => h.done).length;
 
   return (
-    <div className="space-y-4 max-h-[450px] overflow-y-auto pr-1">
+    <div className="space-y-3 h-full overflow-y-auto pr-1">
       {/* Overview Cards */}
-      <div className="grid grid-cols-2 gap-2">
-        <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-lg">
-          <FiCheckCircle className="text-xl mb-1" />
-          <p className="text-xl font-bold">{completedTasks}</p>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-4 rounded-xl shadow-md">
+          <FiCheckCircle className="text-2xl mb-2" />
+          <p className="text-2xl font-bold">{completedTasks}</p>
           <p className="text-xs opacity-90">Completed</p>
         </div>
 
-        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white p-3 rounded-lg">
-          <FiClock className="text-xl mb-1" />
-          <p className="text-xl font-bold">{pendingTasks}</p>
+        <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-white p-4 rounded-xl shadow-md">
+          <FiClock className="text-2xl mb-2" />
+          <p className="text-2xl font-bold">{pendingTasks}</p>
           <p className="text-xs opacity-90">Pending</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-3 rounded-lg">
-          <FiTrendingUp className="text-xl mb-1" />
-          <p className="text-xl font-bold">{completionRate}%</p>
+        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 rounded-xl shadow-md">
+          <FiTrendingUp className="text-2xl mb-2" />
+          <p className="text-2xl font-bold">{completionRate}%</p>
           <p className="text-xs opacity-90">Completion</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-3 rounded-lg">
-          <FiTarget className="text-xl mb-1" />
-          <p className="text-xl font-bold">{completedHabits}/{habits.length}</p>
+        <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-4 rounded-xl shadow-md">
+          <FiTarget className="text-2xl mb-2" />
+          <p className="text-2xl font-bold">{completedHabits}/{habits.length}</p>
           <p className="text-xs opacity-90">Habits</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ const MyStats = () => {
               .map(([category, stats]) => {
                 const categoryRate = Math.round((stats.completed / stats.total) * 100);
                 return (
-                  <div key={category} className="bg-gray-50 p-2 rounded-lg">
+                  <div key={category} className="bg-white border border-gray-200 p-3 rounded-lg">
                     <div className="flex justify-between text-xs mb-1">
                       <span className="font-medium text-gray-700 truncate flex-grow mr-2">{category}</span>
                       <span className="text-gray-500 flex-shrink-0">
@@ -117,16 +117,16 @@ const MyStats = () => {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-2 text-center">
-        <div className="bg-gray-50 p-2 rounded-lg">
-          <p className="text-lg font-bold text-gray-800">{totalTasks}</p>
+        <div className="bg-white border border-gray-200 p-3 rounded-lg">
+          <p className="text-xl font-bold text-gray-800">{totalTasks}</p>
           <p className="text-xs text-gray-500">Total</p>
         </div>
-        <div className="bg-gray-50 p-2 rounded-lg">
-          <p className="text-lg font-bold text-gray-800">{Object.keys(categoryStats).length}</p>
+        <div className="bg-white border border-gray-200 p-3 rounded-lg">
+          <p className="text-xl font-bold text-gray-800">{Object.keys(categoryStats).length}</p>
           <p className="text-xs text-gray-500">Categories</p>
         </div>
-        <div className="bg-gray-50 p-2 rounded-lg">
-          <p className="text-lg font-bold text-gray-800">{habits.length}</p>
+        <div className="bg-white border border-gray-200 p-3 rounded-lg">
+          <p className="text-xl font-bold text-gray-800">{habits.length}</p>
           <p className="text-xs text-gray-500">Habits</p>
         </div>
       </div>

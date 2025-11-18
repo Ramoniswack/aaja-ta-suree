@@ -112,21 +112,21 @@ const Tasks = () => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 h-full flex flex-col">
       {/* Search */}
-      <div className="relative">
+      <div className="relative flex-shrink-0">
         <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
           type="text"
           placeholder="Search tasks..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+          className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
         />
       </div>
 
       {/* Category Filter */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide flex-shrink-0">
         <FiFilter className="text-gray-400 flex-shrink-0 text-sm" />
         {categories.map((cat) => (
           <button
@@ -153,7 +153,7 @@ const Tasks = () => {
       )}
 
       {/* Task List */}
-      <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
+      <div className="space-y-2 flex-grow overflow-y-auto pr-1 min-h-0">
         {filteredTodos.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
             <p className="text-sm">No tasks found</p>
@@ -161,7 +161,7 @@ const Tasks = () => {
           </div>
         ) : (
           filteredTodos.map((todo) => (
-            <div key={todo.id} className="bg-gray-50 rounded-lg border hover:shadow-sm transition p-3">
+            <div key={todo.id} className="bg-white rounded-lg border border-gray-200 hover:shadow-md transition p-3">
               <div className="flex items-start gap-2">
                   <input
                     type="checkbox"

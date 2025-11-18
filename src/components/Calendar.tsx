@@ -90,24 +90,24 @@ const Calendar = () => {
   const isTodaySelected = isSameDay(selectedDate, today);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2 h-full flex flex-col">
       {/* Calendar Header */}
-      <div className="flex items-center justify-between">
-        <button onClick={prevMonth} className="p-2 hover:bg-gray-100 rounded-full transition">
-          <FiChevronLeft className="text-lg" />
+      <div className="flex items-center justify-between flex-shrink-0">
+        <button onClick={prevMonth} className="p-1.5 hover:bg-gray-100 rounded-full transition">
+          <FiChevronLeft className="text-base" />
         </button>
-        <h2 className="text-base font-semibold">
+        <h2 className="text-sm font-semibold">
           {currentDate.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
         </h2>
-        <button onClick={nextMonth} className="p-2 hover:bg-gray-100 rounded-full transition">
-          <FiChevronRight className="text-lg" />
+        <button onClick={nextMonth} className="p-1.5 hover:bg-gray-100 rounded-full transition">
+          <FiChevronRight className="text-base" />
         </button>
       </div>
 
       {/* Calendar Grid */}
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-0.5 flex-shrink-0">
         {["S", "M", "T", "W", "T", "F", "S"].map((day, idx) => (
-          <div key={idx} className="text-center text-xs font-medium text-gray-500 py-1">
+          <div key={idx} className="text-center text-xs font-medium text-gray-500 py-0.5">
             {day}
           </div>
         ))}
@@ -126,7 +126,7 @@ const Calendar = () => {
             <button
               key={day}
               onClick={() => setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day))}
-              className={`aspect-square flex flex-col items-center justify-center rounded-lg text-xs transition ${
+              className={`aspect-square flex flex-col items-center justify-center rounded-md text-xs transition ${
                 todayCheck
                   ? "bg-indigo-600 text-white font-bold"
                   : isSelected(day)
@@ -134,11 +134,11 @@ const Calendar = () => {
                   : "hover:bg-gray-100"
               }`}
             >
-              <span>{day}</span>
+              <span className="text-xs">{day}</span>
               {hasTasks && (
                 <div className="flex gap-0.5 mt-0.5">
                   {tasksForDay.slice(0, 3).map((_, idx) => (
-                    <div key={idx} className={`w-1 h-1 rounded-full ${todayCheck ? "bg-white" : "bg-indigo-600"}`} />
+                    <div key={idx} className={`w-0.5 h-0.5 rounded-full ${todayCheck ? "bg-white" : "bg-indigo-600"}`} />
                   ))}
                 </div>
               )}
@@ -148,26 +148,26 @@ const Calendar = () => {
       </div>
 
       {/* Tasks for Selected Date */}
-      <div className="border-t pt-3">
-        <h3 className="text-sm font-semibold mb-2">
+      <div className="border-t pt-2 flex-grow flex flex-col min-h-0">
+        <h3 className="text-xs font-semibold mb-1.5 flex-shrink-0">
           {isTodaySelected 
             ? "Today's Tasks" 
-            : selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+            : selectedDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}
         </h3>
-        <div className="max-h-[180px] overflow-y-auto pr-1">
+        <div className="flex-grow overflow-y-auto pr-1">
           {selectedDateTasks.length === 0 ? (
-            <div className="text-center py-6 text-gray-500">
+            <div className="text-center py-4 text-gray-500">
               <p className="text-xs">No tasks for this day</p>
               {isTodaySelected && (
-                <p className="text-xs mt-1 text-indigo-600">Click + to add a task for today</p>
+                <p className="text-xs mt-1 text-indigo-600">Click + to add a task</p>
               )}
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {selectedDateTasks.map((todo) => (
-                <div key={todo.id} className="flex items-center gap-2 p-2 bg-gray-50 rounded text-xs">
+                <div key={todo.id} className="flex items-center gap-2 p-1.5 bg-white border border-gray-200 rounded text-xs">
                   <input type="checkbox" checked={todo.done} readOnly className="w-3 h-3 flex-shrink-0" />
-                  <span className={`flex-grow break-words ${todo.done ? "line-through text-gray-400" : "text-gray-700"}`}>
+                  <span className={`flex-grow break-words text-xs ${todo.done ? "line-through text-gray-400" : "text-gray-700"}`}>
                     {todo.text}
                   </span>
                 </div>
