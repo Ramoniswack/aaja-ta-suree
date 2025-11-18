@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { FiSearch, FiFilter, FiEdit2, FiTrash2 } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import TodoService from "../services/todoService";
 import NotificationService from "../services/notificationService";
@@ -8,7 +7,6 @@ import EditTaskModal from "./EditTaskModal";
 import type { TodoItem } from "../types/types";
 
 const Tasks = () => {
-  const navigate = useNavigate();
   const loggedUser = JSON.parse(Cookies.get("loggedInUser") || "{}");
   const userId = loggedUser.email;
   const [todos, setTodos] = useState<TodoItem[]>([]);
@@ -63,12 +61,6 @@ const Tasks = () => {
     setEditingTodo({ ...todo });
   };
 
-  const handleEditChange = (field: keyof TodoItem, value: any) => {
-    if (editingTodo) {
-      setEditingTodo({ ...editingTodo, [field]: value });
-    }
-  };
-
   const saveEdit = async (updatedTodo: TodoItem) => {
     if (!updatedTodo?.id || !updatedTodo.text.trim()) return;
     try {
@@ -76,7 +68,7 @@ const Tasks = () => {
       if (updatedTodo.category) {
         const { default: CategoryService } = await import('../services/categoryService');
         const existingCats = await CategoryService.getCategories(userId);
-        if (!existingCats.category) {
+        if (!existingCats.includes(updatedTodo.category)) {
           await CategoryService.addCategory(userId, updatedTodo.category);
         }
       }
@@ -138,8 +130,8 @@ const Tasks = () => {
         <FiFilter className="text-gray-400 flex-shrink-0 text-sm" />
         {categories.map((cat) => (
           <button
-            key={cat}
-            onClick={() => setFilterCategory(cat)}
+            key={cat || 'all'}
+            onClick={() => setFilterCategory(cat || 'all')}
             className={`px-3 py-1 rounded-full text-xs whitespace-nowrap transition flex-shrink-0 ${
               filterCategory === cat
                 ? "bg-indigo-600 text-white"

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiX, FiSave, FiClock, FiPlus, FiCheck } from "react-icons/fi";
-import type { TodoItem, SubTask } from "../types/types";
+import type { TodoItem } from "../types/types";
 
 interface EditTaskModalProps {
   todo: TodoItem;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import type { TodoItem, SubTask } from "../types/types";
+import type { SubTask } from "../types/types";
 import { FiArrowLeft, FiPlus, FiX, FiCheck, FiClock } from "react-icons/fi";
 import Footer from "../components/Footer";
 import TodoService from "../services/todoService";

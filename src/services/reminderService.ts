@@ -85,7 +85,6 @@ export class ReminderService {
         badge: '/ats.png',
         tag: `todo-reminder-${todo.id}`,
         requireInteraction: true,
-        vibrate: [200, 100, 200],
       });
     }
   }
@@ -134,7 +133,6 @@ export class ReminderService {
         badge: '/ats.png',
         tag: 'todo-reminder',
         requireInteraction: false,
-        vibrate: [200, 100, 200],
       });
     }
   }
