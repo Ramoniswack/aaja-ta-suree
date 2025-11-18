@@ -71,7 +71,7 @@ export class ReminderService {
 
   // Send reminder for specific task
   private async sendTaskReminder(todo: TodoItem): Promise<void> {
-    const title = '⏰ Task Reminder';
+    const title = 'Task Reminder';
     const body = `Don't forget: ${todo.text}`;
 
     // Send to notification service (handles mobile)
@@ -99,7 +99,7 @@ export class ReminderService {
       return;
     }
 
-    const title = '📋 Task Reminder';
+    const title = 'Task Reminder';
     const body = `You have ${pendingTodos.length} pending task${
       pendingTodos.length > 1 ? 's' : ''
     } to complete!`;

@@ -119,7 +119,7 @@ const Todo = () => {
       
       console.log("Todo added successfully");
       await NotificationService.sendImmediateNotification(
-        "✅ Task Added",
+        "Task Added",
         `"${trimmedText}" has been added`
       );
 

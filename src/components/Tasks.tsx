@@ -49,7 +49,7 @@ const Tasks = () => {
     try {
       await TodoService.toggleTodoDone(todo.id, todo.done);
       await NotificationService.sendImmediateNotification(
-        todo.done ? "🔄 Task Reopened" : "✅ Task Completed",
+        todo.done ? "Task Reopened" : "Task Completed",
         `"${todo.text}"`
       );
     } catch (error) {
@@ -86,7 +86,7 @@ const Tasks = () => {
       };
       
       await TodoService.updateTodo(updatedTodo.id, updates);
-      await NotificationService.sendImmediateNotification("✏️ Task Updated", `"${updatedTodo.text}"`);
+      await NotificationService.sendImmediateNotification("Task Updated", `"${updatedTodo.text}"`);
       setEditingTodo(null);
     } catch (error) {
       console.error("Error updating todo:", error);
@@ -97,7 +97,7 @@ const Tasks = () => {
     if (!todo.id || !window.confirm("Delete this task?")) return;
     try {
       await TodoService.deleteTodo(todo.id);
-      await NotificationService.sendImmediateNotification("🗑️ Task Deleted", `"${todo.text}"`);
+      await NotificationService.sendImmediateNotification("Task Deleted", `"${todo.text}"`);
     } catch (error) {
       console.error("Error deleting todo:", error);
     }
