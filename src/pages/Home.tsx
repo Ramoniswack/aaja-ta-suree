@@ -84,6 +84,33 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Notification Permission Banner */}
+        {typeof Notification !== 'undefined' && Notification.permission === 'default' && (
+          <div className="mx-4 mt-3 p-3 bg-indigo-50 border border-indigo-200 rounded-lg">
+            <p className="text-xs text-indigo-800 mb-2">
+              {/iPhone|iPad|iPod/.test(navigator.userAgent) 
+                ? 'iOS Safari does not support web notifications. For full notification support, we recommend using Chrome on Android or desktop.'
+                : 'Enable notifications to get reminders!'}
+            </p>
+            {!/iPhone|iPad|iPod/.test(navigator.userAgent) && (
+              <button
+                onClick={async () => {
+                  const permission = await Notification.requestPermission();
+                  if (permission === 'granted') {
+                    await NotificationService.sendImmediateNotification(
+                      'Notifications Enabled',
+                      'You will now receive task reminders'
+                    );
+                  }
+                }}
+                className="w-full py-2 bg-indigo-600 text-white text-xs rounded-lg hover:bg-indigo-700 transition"
+              >
+                Enable Notifications
+              </button>
+            )}
+          </div>
+        )}
+
         {/* Content */}
         <div className="flex-1 overflow-y-auto px-4 py-3 min-h-0">
           {activeTab === "tasks" && <Tasks />}
