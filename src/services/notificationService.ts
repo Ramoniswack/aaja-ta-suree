@@ -158,7 +158,6 @@ export class NotificationService {
           body,
           icon: '/ats.png',
           badge: '/ats.png',
-          vibrate: [200, 100, 200],
         });
       }
       return;
