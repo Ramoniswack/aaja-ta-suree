@@ -6,7 +6,22 @@ export interface SignupData {
 }
 
 export interface TodoItem {
+  id?: string;
   text: string;
   done: boolean;
   description?: string;
-};
+  reminderTime?: Date;
+  category?: string;
+  reminderTimes?: string[];
+  subtasks?: SubTask[];
+  isHabit?: boolean;
+  habitFrequency?: 'daily' | 'weekly' | 'monthly';
+  dueDate?: string;
+  priority?: 'low' | 'medium' | 'high';
+}
+
+export interface SubTask {
+  id: string;
+  text: string;
+  done: boolean;
+}

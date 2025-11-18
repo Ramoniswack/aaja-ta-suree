@@ -1,23 +1,16 @@
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Home from "./pages/Home";
 import Todo from "./pages/Todo";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
-
-
 function App() {
-
   return (
    <BrowserRouter>
-
       <Routes>
-        {/* <Route path="/" element={<Login />} />
-        <Route path="/Signup" element={<Signup />} /> */}
-        {/* <Route path="/todo" element={<Todo />} /> */}
-
-         <Route
+        <Route
           path="/login"
           element={
             <PublicRoute>
@@ -26,19 +19,27 @@ function App() {
           }
         />
         <Route
-  path="/"
-  element={
-    <PublicRoute>
-      <Login />
-    </PublicRoute>
-  }
-/>
+          path="/"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/signup"
           element={
             <PublicRoute>
               <Signup />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
           }
         />
         <Route

@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import type { SignupData } from "../types/types";
+import { FcGoogle } from "react-icons/fc";
 import Footer from "../components/Footer";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,24 +16,46 @@ const Login = () => {
   useEffect(() => {
     const loggedInUser = Cookies.get("loggedInUser");
     if (loggedInUser) {
-      navigate("/todo");
+      navigate("/home");
     }
   }, []);
 
-  const handleLogin = () => {
-    const stored = localStorage.getItem("users");
-    if (!stored) return alert("No user found");
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      const userData = {
+        name: user.displayName || email.split('@')[0],
+        email: user.email,
+        uid: user.uid
+      };
+      
+      Cookies.set("loggedInUser", JSON.stringify(userData), { expires: 1 });
+      navigate("/home");
+    } catch (error: any) {
+      console.error("Login error:", error);
+      alert(error.message || "Invalid credentials");
+    }
+  };
 
-    const users = JSON.parse(stored);
-    const user = users.find(
-      (u: SignupData) => u.email === email && atob(u.password) === password
-    );
-
-    if (user) {
-      Cookies.set("loggedInUser", JSON.stringify(user), { expires: 1 });
-      navigate("/todo");
-    } else {
-      alert("Invalid credentials");
+  const handleGoogleLogin = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      
+      const userData = {
+        name: user.displayName || user.email?.split('@')[0],
+        email: user.email,
+        uid: user.uid
+      };
+      
+      Cookies.set("loggedInUser", JSON.stringify(userData), { expires: 1 });
+      navigate("/home");
+    } catch (error: any) {
+      console.error("Google login error:", error);
+      alert(error.message || "Google sign-in failed");
     }
   };
 
@@ -89,6 +113,20 @@ const Login = () => {
             className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition duration-300 cursor-pointer"
           >
             Log In
+          </button>
+
+          <div className="relative flex items-center justify-center my-4">
+            <div className="border-t border-gray-300 flex-grow"></div>
+            <span className="px-3 text-sm text-gray-500">OR</span>
+            <div className="border-t border-gray-300 flex-grow"></div>
+          </div>
+
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3 rounded-lg hover:bg-gray-50 transition duration-300 cursor-pointer flex items-center justify-center gap-2"
+          >
+            <FcGoogle className="text-2xl" />
+            Sign in with Google
           </button>
 
           <p className="text-center text-sm text-gray-600">

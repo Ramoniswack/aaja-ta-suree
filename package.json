@@ -7,13 +7,22 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "android": "npm run build && npx cap sync android && npx cap open android",
+    "ios": "npm run build && npx cap sync ios && npx cap open ios",
+    "sync": "npm run build && npx cap sync",
+    "check-setup": "node check-setup.js"
   },
   "dependencies": {
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/local-notifications": "^7.0.3",
+    "@capacitor/push-notifications": "^7.0.3",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^5.0.1",
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.9.0",
+    "firebase": "^12.6.0",
     "js-cookie": "^3.0.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -24,6 +33,7 @@
     "zod": "^3.25.20"
   },
   "devDependencies": {
+    "@capacitor/cli": "^7.4.4",
     "@eslint/js": "^9.25.0",
     "@types/js-cookie": "^3.0.6",
     "@types/react": "^19.1.2",
